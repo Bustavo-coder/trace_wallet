@@ -1,4 +1,4 @@
-from .models import  Wallet
+from wallet.models import  Wallet
 def create_wallet(user):
     Wallet.objects.create(
         user=user,

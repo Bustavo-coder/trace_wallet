@@ -11,7 +11,7 @@ from user.serializer import UserSerializer, LoginSerializer
 def register(request):
     serializer = UserSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
-    user,wallet = create_user_and_wallet(serializer.validated_data)
+    create_user_and_wallet(serializer.validated_data)
     return Response({"message" : "Registration Successful"},status.HTTP_201_CREATED)
 
 @api_view(['Post'])

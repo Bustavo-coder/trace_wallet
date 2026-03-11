@@ -1,6 +1,7 @@
 from django.core.mail import send_mail
 
 from .models import Notification
+from django.conf import settings
 
 def create_notification(user):
     notification = Notification.objects.create(
@@ -15,7 +16,7 @@ def create_notification(user):
     send_mail(
         subject="welcome to quick pay",
         message=notification.message,
-        from_email='',
+        from_email=settings.DEFAULT_FROM_EMAIL,
         recipient_list=[user.email],
         fail_silently=True
     )

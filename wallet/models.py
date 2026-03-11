@@ -21,7 +21,7 @@ class Wallet(models.Model):
     )
     user = models.OneToOneField(AUTH_USER_MODEL,on_delete=models.PROTECT)
     #on_delete is saying that when we delete the parent the child must be deleted that models.CASCADE but in system we don't delete manually we do soft delete limiting access to the entity
-    wallet_number = models.CharField(max_length=10,unique=True,)
+    wallet_number = models.CharField(max_length=10,unique=True,primary_key=True)
     account_number = models.CharField(max_length= 10, unique=True,default=generate_account_number)
     balance = models.DecimalField(max_digits=10,decimal_places=2,default=0)
     currency = models.CharField(max_length=3, default='NGN',choices=CURRENCY_CHOICES)
@@ -38,6 +38,7 @@ class Transaction(models.Model):
     ("FAILED","failed")
     )
     reference = models.CharField(max_length= 20, default=generate_reference_id)
+    amount = models.DecimalField(max_digits=10,decimal_places=2,default=0)
     transaction_type = models.CharField(choices=TRANSACTION_CHOICES,max_length=100)
     sender = models.ForeignKey(Wallet,on_delete=models.PROTECT,related_name='sender')
     receiver = models.ForeignKey(Wallet,on_delete=models.PROTECT,related_name='receiver')
