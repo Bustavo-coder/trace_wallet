@@ -11,7 +11,7 @@ class Notification(models.Model):
     ("MESSAGE","message"),
     ("EMAIL","email"),
     )
-    wallet_number = models.CharField(max_length=100,blank=True,null=True,unique=True)
+    wallet_number = models.CharField(max_length=100,blank=True,null=True,)
     reference = models.CharField(max_length=40,unique=True,blank=True,null=True)
     created_at = models.DateTimeField(auto_now=True)
     message = models.TextField(blank=False)
