@@ -19,7 +19,7 @@ class Wallet(models.Model):
     ("ACTIVE",'Active'),
     ("CLOSED","closed"),
     )
-    user = models.OneToOneField(AUTH_USER_MODEL,on_delete=models.PROTECT)
+    user = models.OneToOneField(AUTH_USER_MODEL,on_delete=models.PROTECT,related_name='wallet')
     #on_delete is saying that when we delete the parent the child must be deleted that models.CASCADE but in system we don't delete manually we do soft delete limiting access to the entity
     wallet_number = models.CharField(max_length=10,unique=True,primary_key=True)
     account_number = models.CharField(max_length= 10, unique=True,default=generate_account_number)
