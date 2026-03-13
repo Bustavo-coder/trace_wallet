@@ -19,4 +19,12 @@ class TransferSerializer(serializers.Serializer):
             _receiver_wallet = Wallet.objects.get(wallet_number=value)
         except Wallet.DoesNotExist:
             raise Exception("Wallet Does Not Exist")
-        return _receiver_wallet
+        return value
+
+class DepositSerializer(serializers.Serializer):
+    amount = serializers.DecimalField(max_digits=10, decimal_places=2)
+    idempotency_key = serializers.UUIDField()
+    def validate_amount(self, value):
+        if value < 0:
+            raise Exception("Invalid amount. Funds Must be greater Than 0")
+        return value

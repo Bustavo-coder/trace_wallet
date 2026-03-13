@@ -20,6 +20,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path("user/", include("user.urls")),
-    path("transfer/",include("wallet.urls")),
+    path("wallet/",include("wallet.urls")),
 
 ]
