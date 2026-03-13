@@ -156,4 +156,5 @@ SIMPLE_JWT ={
 }
 PAY_STACK_PUBLIC_KEY = os.getenv('PAYSTACK_PUBLIC_KEY')
 PAYSTACK_SECRET_KEY = os.getenv('PAYSTACK_SECRET_KEY')
-PAYSTACK_INITIATE_URL = os.getenv('PAYSTACK_INITIATE_URL')
+PAYSTACK_INITIATE_URL = "https://api.paystack.co/transaction/initialize"
+PAYSTACK_VERIFY_URL='https://api.paystack.co/transaction/verify/'

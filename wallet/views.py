@@ -8,7 +8,7 @@ from .models import Wallet
 from .serilizer import TransferSerializer, DepositSerializer
 from service.transfer_service import create_transfer
 from service.deposit_service import deposit_service
-from .service.fund_wallet import initiate_paystack_payment
+from service.fund_wallet_service import fund_wallet
 
 
 # Create your views here.
@@ -53,12 +53,14 @@ def deposit_wallet(request):
         "created_at" : transaction.created_at,
     },status.HTTP_200_OK)
 
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def fund_wallet(request):
     serializer = DepositSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
     user = request.user
-    amount = serializer.validated_data(["amount"])
-    payment = initiate_paystack_payment(user,amount)
+    amount = serializer.validated_data['amount']
+    payment = fund_wallet(user,amount)
 
     return Response(payment,status=status.HTTP_200_OK)
 

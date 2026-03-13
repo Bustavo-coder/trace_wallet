@@ -47,4 +47,24 @@ def create_transfer_notification(user,amount):
     notification.is_read = True
     notification.save()
 
+def create_deposit_notification(user,amount):
+    wallet = get_object_or_404(Wallet,user=user)
+    notification = Notification.objects.create(
+        wallet_number= wallet.wallet_number,
+        message= f"""     ***Deposit ALERT***
+        {amount} has been credited to your wallet
+        Your new Balance is : {wallet.balance}
+        """,
+        event_type = "WALLET_DEPOSIT_NOTIFICATION",
+    )
+    send_mail(
+        subject="Credit Alert",
+        message=notification.message,
+        from_email=settings.DEFAULT_FROM_EMAIL,
+        recipient_list=[user.email],
+        fail_silently=True
+    )
+    notification.is_read = True
+    notification.save()
+
 
