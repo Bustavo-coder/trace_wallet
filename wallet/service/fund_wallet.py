@@ -12,7 +12,6 @@ from wallet.models import Wallet, Transaction, Ledger
 
 User = get_user_model()
 def initiate_paystack_payment(user,amount):
-    print(PAYSTACK_SECRET_KEY,PAYSTACK_VERIFY_URL,PAYSTACK_INITIATE_URL)
     header = {
         'Authorization' :f"Bearer {PAYSTACK_SECRET_KEY}",
         'Content-Type': 'application/json',

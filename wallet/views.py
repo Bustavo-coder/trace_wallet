@@ -8,7 +8,7 @@ from .models import Wallet
 from .serilizer import TransferSerializer, DepositSerializer
 from service.transfer_service import create_transfer
 from service.deposit_service import deposit_service
-from service.fund_wallet_service import fund_wallet
+from service.fund_wallet_service import fund_wallet_onboard
 
 
 # Create your views here.
@@ -60,7 +60,7 @@ def fund_wallet(request):
     serializer.is_valid(raise_exception=True)
     user = request.user
     amount = serializer.validated_data['amount']
-    payment = fund_wallet(user,amount)
+    payment = fund_wallet_onboard(user, amount)
 
     return Response(payment,status=status.HTTP_200_OK)
 
