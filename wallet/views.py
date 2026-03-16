@@ -5,10 +5,11 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from .models import Wallet
-from .serilizer import TransferSerializer, DepositSerializer
+from .serilizer import TransferSerializer, DepositSerializer, DashboardSerializer
 from service.transfer_service import create_transfer
 from service.deposit_service import deposit_service
 from service.fund_wallet_service import fund_wallet_onboard
+from .service.dashboard_service import get_dashboard
 
 
 # Create your views here.
@@ -64,3 +65,10 @@ def fund_wallet(request):
 
     return Response(payment,status=status.HTTP_200_OK)
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_dashboard_data(request):
+    user = request.user
+    dashboard_date = get_dashboard(user)
+    serializer = DashboardSerializer(dashboard_date)
+    return Response(serializer.data,status=status.HTTP_200_OK)

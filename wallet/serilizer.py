@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from wallet.models import Wallet
+from wallet.models import Wallet, Transaction
 
 
 class TransferSerializer(serializers.Serializer):
@@ -28,3 +28,18 @@ class DepositSerializer(serializers.Serializer):
         if value < 0:
             raise Exception("Invalid amount. Funds Must be greater Than 0")
         return value
+
+class RecentTransactionSerialize(serializers.ModelSerializer):
+    class Meta :
+        model = Transaction
+        fields = ['receiver','reference','amount','transaction_status','created_at','transaction_type']
+
+class DashboardSerializer(serializers.Serializer):
+    message = serializers.CharField(max_length=300,allow_blank=True,allow_null=True)
+    wallet_number = serializers.CharField(max_length=10)
+    balance = serializers.DecimalField(decimal_places=2,max_digits=10)
+    currency = serializers.CharField(max_length=10)
+    status = serializers.CharField(max_length=10,)
+    transactions = RecentTransactionSerialize(many=True)
+
+

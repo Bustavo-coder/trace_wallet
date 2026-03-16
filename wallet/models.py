@@ -26,6 +26,8 @@ class Wallet(models.Model):
     balance = models.DecimalField(max_digits=10,decimal_places=2,default=0)
     currency = models.CharField(max_length=3, default='NGN',choices=CURRENCY_CHOICES)
     status = models.CharField(max_length=10, choices=WALLET_STATUS, default='ACTIVE')
+    def __str__(self):
+        return f"{self.account_number}"
 
 class Transaction(models.Model):
     TRANSACTION_CHOICES = (
@@ -48,6 +50,8 @@ class Transaction(models.Model):
     idempotency_key = models.UUIDField(unique=True,blank=True,editable=False,default=uuid.uuid4)
     transaction_status = models.CharField(choices=TRANSACTION_STATUS,max_length=100)
 
+    def __str__(self):
+        return f"{self.reference}\t{self.amount}"
 class Ledger (models.Model):
     TRANSACTION_TYPE = (
     ('CREDIT','Credit'),
