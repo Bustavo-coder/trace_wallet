@@ -11,11 +11,12 @@ jobs:
     runs-on: ubuntu-latest
     services:
       mysql:
-        image: mysql:latest
+        image: mysql:8.0
         env:
-          MYSQL_DB: traceWallet
-          MYSQL_USER: postgres
+          MYSQL_DATABASE: traceWallet
+          MYSQL_ROOT_USER: mysql
           MYSQL_PASSWORD: mysqlpassword
+          MYSQL_ROOT_PASSWORD: password123
         ports:
           - 3306:3306
         options: >-
@@ -48,6 +49,7 @@ jobs:
           DB_HOST: localhost
           DB_PORT: 3306
           SECRET_KEY: test_secret_key
+          DJANGO_SETTINGS_MODULE: trace_wallet.settings
         run: python manage.py test
 
   build-and-push:
