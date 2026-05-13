@@ -43,10 +43,10 @@ jobs:
       - name: Run Tests
         env:
           DB_NAME: quickpay
-          DB_USER: postgres
-          DB_PASSWORD: postgres
+          DB_USER: mysql
+          DB_PASSWORD: mysqlpassword
           DB_HOST: localhost
-          DB_PORT: 5432
+          DB_PORT: 3306
           SECRET_KEY: test_secret_key
         run: python manage.py test
 
