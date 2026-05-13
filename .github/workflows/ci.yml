@@ -2,13 +2,27 @@ name: CI Workflow
 
 on:
   push:
-    branches: [ "main", "master",* ]
+    branches: [ "main", "master"]
   pull_request:
-    branches: [ "main", "master",* ]
+    branches: [ "main", "master" ]
 
 jobs:
   test:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_DB: quickpay
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -28,18 +42,17 @@ jobs:
 
       - name: Run Tests
         env:
-          DB_NAME:tracewallet
-          DB_USER:postgres
-          DB_PASSWORD:postgres
-          DB_HOST:localhost
-          DB_PORT:5432
-          SECRET_KEY:test_secret_key
+          DB_NAME: quickpay
+          DB_USER: postgres
+          DB_PASSWORD: postgres
+          DB_HOST: localhost
+          DB_PORT: 5432
+          SECRET_KEY: test_secret_key
         run: python manage.py test
 
   build-and-push:
     needs: test
     runs-on: ubuntu-latest
-    if: github.event_name == 'push'
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
