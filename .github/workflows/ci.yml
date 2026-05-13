@@ -2,9 +2,9 @@ name: CI Workflow
 
 on:
   push:
-    branches: [ "main", "master" ]
+    branches: [ "main", "master",* ]
   pull_request:
-    branches: [ "main", "master" ]
+    branches: [ "main", "master",* ]
 
 jobs:
   test:
@@ -27,6 +27,13 @@ jobs:
         run: uv pip install --system -r pyproject.toml
 
       - name: Run Tests
+        env:
+          DB_NAME:tracewallet
+          DB_USER:postgres
+          DB_PASSWORD:postgres
+          DB_HOST:localhost
+          DB_PORT:5432
+          SECRET_KEY:test_secret_key
         run: python manage.py test
 
   build-and-push:
