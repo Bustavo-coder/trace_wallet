@@ -10,16 +10,16 @@ jobs:
   test:
     runs-on: ubuntu-latest
     services:
-      postgres:
-        image: postgres:latest
+      mysql:
+        image: mysql:latest
         env:
-          POSTGRES_DB: quickpay
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
+          MYSQL_DB: traceWallet
+          MYSQL_USER: postgres
+          MYSQL_PASSWORD: mysqlpassword
         ports:
-          - 5432:5432
+          - 3306:3306
         options: >-
-          --health-cmd pg_isready
+          --health-cmd sql_isready
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
